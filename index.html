@@ -449,7 +449,7 @@ function moveStep() {
     } else {
       Sounds.eat();
     }
-    for (let i = 0; i < 3; i++) snake.push([...snake[snake.length - 1]]);
+    for (let i = 0; i < 1; i++) snake.push([...snake[snake.length - 1]]);
     const fx = newHead[0] * CELL + CELL / 2, fy = newHead[1] * CELL + CELL / 2;
     emitParticles(fx, fy, x2End > now2 ? C.x2 : C.particle, 20);
     maybePowerUp();
@@ -491,7 +491,7 @@ function showGameOver() {
 
 function showStart() {
   screenEl.classList.remove('hidden');
-  stEl.textContent = 'Neon Serpent'; stEl.className = 's-title';
+  stEl.textContent = 'Neon Snake Game '; stEl.className = 's-title';
   ssEl.textContent = 'Arrow keys · swipe · d-pad';
   sscEl.style.display = 'none'; sbstEl.style.display = 'none';
   sbtn.textContent = 'Play'; sbtn2.style.display = 'none';
