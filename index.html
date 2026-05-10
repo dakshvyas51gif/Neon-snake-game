@@ -6,7 +6,7 @@
 <title>Neon Serpent Pro</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;background:#07080f;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif}
+html,body{width:100%;height:100%;background:#1823b0;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif}
 #G{width:100%;height:100%;background:#07080f;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
 #hud{width:100%;max-width:520px;display:flex;align-items:center;justify-content:space-between;padding:10px 16px 8px;background:#07080f;border-bottom:1px solid rgba(0,255,170,0.1)}
 .hstat{text-align:center}
@@ -36,9 +36,9 @@ canvas{display:block;image-rendering:pixelated;touch-action:none}
 .pub.x2{background:rgba(190,80,255,0.15);border-color:#be50ff;color:#be50ff}
 #soundbtn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:5px 11px;font-size:11px;color:rgba(255,255,255,0.4);cursor:pointer;font-family:inherit;letter-spacing:.06em;transition:all .15s}
 #soundbtn:hover{border-color:#00ffaa;color:#00ffaa}
-#dpad{display:grid;grid-template-columns:54px 54px 54px;grid-template-rows:54px 54px;gap:5px;padding:12px 0 10px;background:#07080f;justify-content:center}
-.dk{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.45);font-size:22px;user-select:none;-webkit-user-select:none;transition:all .1s}
-.dk:active,.dk.lit{background:rgba(0,255,170,0.14);border-color:#00ffaa;color:#00ffaa}
+padding:12px 0 10px;background:#07080f;justify-content:center}
+display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.45);font-size:22px;user-select:none;-webkit-user-select:none;transition:all .1s}
+
 .pu-legend{display:flex;gap:12px;padding:6px 0 0;justify-content:center;flex-wrap:wrap}
 .pul{font-size:10px;color:rgba(255,255,255,0.3);display:flex;align-items:center;gap:4px}
 .pul span{width:8px;height:8px;border-radius:50%;display:inline-block}
@@ -62,7 +62,7 @@ canvas{display:block;image-rendering:pixelated;touch-action:none}
     <canvas id="cv"></canvas>
     <div id="pubar"></div>
     <div id="screen">
-      <div class="s-title" id="st">Neon Sake Game</div>
+      <div class="s-title" id="st">Neon Snake Game</div>
       <div class="s-sub" id="ss">Arrow keys &middot; swipe &middot; d-pad</div>
       <div class="s-score" id="ssc" style="display:none"></div>
       <div class="s-best" id="sbst" style="display:none"></div>
@@ -75,15 +75,7 @@ canvas{display:block;image-rendering:pixelated;touch-action:none}
       <button class="s-btn ghost" id="sbtn2" style="display:none">Main Menu</button>
     </div>
   </div>
-  <div id="dpad">
-    <div></div>
-    <div class="dk" id="du">⬆️</div>
-    <div class="dk" id="dl">➡️</div>
-    <div class="dk" id="dd">⬅️</div>
-    <div class="dk" id="dr">⬇️</div>
-  </div>
-</div>
-
+  
 <script>
 // ─── WEB AUDIO ENGINE ───────────────────────────────────────
 const AC = new (window.AudioContext || window.webkitAudioContext)();
@@ -491,7 +483,7 @@ function showGameOver() {
 
 function showStart() {
   screenEl.classList.remove('hidden');
-  stEl.textContent = 'Neon Snake Game '; stEl.className = 's-title';
+  stEl.textContent = 'Neon Snake Game'; stEl.className = 's-title';
   ssEl.textContent = 'Arrow keys · swipe · d-pad';
   sscEl.style.display = 'none'; sbstEl.style.display = 'none';
   sbtn.textContent = 'Play'; sbtn2.style.display = 'none';
@@ -528,16 +520,7 @@ document.querySelectorAll('.lvl').forEach(b => {
   });
 });
 
-const dmap = { du: [0, -1], dl: [-1, 0], dd: [0, 1], dr: [1, 0] };
-Object.entries(dmap).forEach(([id, d]) => {
-  const el = document.getElementById(id);
-  function go(e) {
-    e.preventDefault(); resumeAC(); tryDir(d);
-    el.classList.add('lit'); setTimeout(() => el.classList.remove('lit'), 120);
-  }
-  el.addEventListener('touchstart', go, { passive: false });
-  el.addEventListener('mousedown', go);
-});
+
 
 document.addEventListener('keydown', e => {
   const km = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0], w: [0, -1], s: [0, 1], a: [-1, 0], d: [1, 0] };
